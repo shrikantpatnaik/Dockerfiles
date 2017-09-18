@@ -1,0 +1,40 @@
+version: '3'
+services:
+  transmission:
+    image: linuxserver/transmission
+    container_name: transmission
+    restart: unless-stopped
+    ports:
+      - "127.0.0.1:#{TRANSMISSION_PORT}:9091"
+      - "51413:51413"
+      - "51413:51413/udp"
+    volumes:
+      - ${TRANSMISSION_FILES_PATH}/config:/config
+      - ${TRANSMISSION_FILES_PATH}/downloads:/downloads
+      - ${TRANSMISSION_FILES_PATH}/watch:/watch
+    environment:
+      TZ: "#{TIMEZONE}"
+      PUID: #{USER_ID}
+      PGID: #{GROUP_ID}
+      VIRTUAL_HOST: ${TRANSMISSION_URL}
+      VIRTUAL_PROTO: http
+      VIRTUAL_PORT: #{TRANSMISSION_PORT}
+      LETSENCRYPT_HOST: ${TRANSMISSION_URL}
+      LETSENCRYPT_EMAIL: #{LETSENCRYPT_EMAIL_ID}
+
+  emby:
+    image: emby/embyserver
+    container_name: embyserver
+    restart: unless-stopped
+    ports:
+      - "127.0.0.1:#{EMBY_PORT}:8920"
+    volumes:
+      - ${EMBY_FILES_PATH}/config:/config
+      - ${EMBY_MEDIA_PATH}:/media
+    environment:
+      TZ: "#{TIMEZONE}"
+      VIRTUAL_HOST: #{EMBY_URL}
+      VIRTUAL_PROTO: https
+      VIRTUAL_PORT: #{EMBY_PORT}
+      LETSENCRYPT_HOST: #{EMBY_URL}
+      LETSENCRYPT_EMAIL: #{LETSENCRYPT_EMAIL_ID}
