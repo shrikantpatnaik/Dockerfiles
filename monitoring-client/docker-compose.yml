@@ -1,4 +1,9 @@
 version: '3'
+networks:
+  default:
+    external:
+      name: webproxy-net
+
 services:
   cadvisor:
     image: google/cadvisor:latest

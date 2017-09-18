@@ -1,4 +1,9 @@
 version: '3'
+networks:
+  default:
+    external:
+      name: webproxy-net
+      
 services:
   transmission:
     image: linuxserver/transmission
