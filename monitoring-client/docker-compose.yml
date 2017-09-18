@@ -5,7 +5,7 @@ services:
     container_name: cadvisor
     restart: unless-stopped
     ports:
-      - "127.0.0.1:#{CADVISOR_PORT}:8080"
+      - "127.0.0.1:${CADVISOR_PORT}:8080"
     volumes:
       - /:/rootfs:ro
       - /var/run:/var/run:rw
@@ -13,16 +13,16 @@ services:
       - /var/lib/docker/:/var/lib/docker:ro
       - /dev/disk/:/dev/disk:ro
     environment:
-      VIRTUAL_HOST: #{CADVISOR_URL}
+      VIRTUAL_HOST: ${CADVISOR_URL}
       VIRTUAL_PROTO: http
-      VIRTUAL_PORT: #{CADVISOR_PORT}
+      VIRTUAL_PORT: ${CADVISOR_PORT}
 
   nodeexporter:
     image: prom/node-exporter
     container_name: nodeexporter
     restart: unless-stopped
     ports:
-      - "127.0.0.1:#{NODEXPORTER_PORT}:9100"
+      - "127.0.0.1:${NODEXPORTER_PORT}:9100"
     volumes:
       - /proc:/host/proc:ro
       - /sys:/host/sys:ro
@@ -32,6 +32,6 @@ services:
       - '-collector.sysfs=/host/sys'
       - '-collector.filesystem.ignored-mount-points=^/(sys|proc|dev|host|etc)($$|/)'
     environment:
-      VIRTUAL_HOST: #{NODEXPORTER_URL}
+      VIRTUAL_HOST: ${NODEXPORTER_URL}
       VIRTUAL_PROTO: http
-      VIRTUAL_PORT: #{NODEXPORTER_PORT}
+      VIRTUAL_PORT: ${NODEXPORTER_PORT}
