@@ -1,0 +1,10 @@
+version: '3'
+services:
+  ghost:
+    image: ghost
+    container_name: ghost-main
+    ports:
+     - "3000:2368"
+    restart: always
+    volumes:
+     - ${GHOST_FILES_PATH}:/var/lib/ghost/content
