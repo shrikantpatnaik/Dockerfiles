@@ -14,7 +14,6 @@ services:
     volumes:
      - ${GHOST_FILES_PATH}:/var/lib/ghost/content
     environment:
-      url: https://${GHOST_URL}
       VIRTUAL_HOST: ${GHOST_URL}
       VIRTUAL_PROTO: http
       VIRTUAL_PORT: ${GHOST_PORT}
