@@ -1,0 +1,22 @@
+# This requires building the image from https://github.com/andreipoe/linkr-docker with custom configuration
+version: '3'
+networks:
+  default:
+    external:
+      name: webproxy_webproxy-net
+
+services:
+  ghost:
+    image: linkr
+    container_name: linkr
+    ports:
+     - "127.0.0.1:${LINKR_PORT}:80"
+    restart: always
+    volumes:
+     - ${LINKR_FILES_PATH}:/data
+    environment:
+      VIRTUAL_HOST: ${LINKR_URL}
+      VIRTUAL_PROTO: http
+      VIRTUAL_PORT: ${LINKR_PORT}
+      LETSENCRYPT_HOST: ${LINKR_URL}
+      LETSENCRYPT_EMAIL: ${LETSENCRYPT_EMAIL_ID}
