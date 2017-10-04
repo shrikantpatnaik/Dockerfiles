@@ -1,5 +1,5 @@
 # Quick Start with docker-compose
-This has been copied as is from the original [source repository}(https://github.com/kylemanna/docker-openvpn)
+This has been copied as is from the original [source repository](https://github.com/kylemanna/docker-openvpn)
 * Initialize the configuration files and certificates
 
 ```bash
