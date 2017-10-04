@@ -8,7 +8,7 @@ services:
   transmission:
     image: linuxserver/transmission
     container_name: transmission
-    restart: unless-stopped
+    restart: always
     ports:
       - "127.0.0.1:${TRANSMISSION_PORT}:9091"
       - "51413:51413"
@@ -30,16 +30,16 @@ services:
   emby:
     image: emby/embyserver
     container_name: embyserver
-    restart: unless-stopped
+    restart: always
     ports:
-      - "127.0.0.1:${EMBY_PORT}:8920"
+      - "127.0.0.1:${EMBY_PORT}:8096"
     volumes:
       - ${EMBY_FILES_PATH}/config:/config
       - ${EMBY_MEDIA_PATH}:/media
     environment:
       TZ: "${TIMEZONE}"
       VIRTUAL_HOST: ${EMBY_URL}
-      VIRTUAL_PROTO: https
+      VIRTUAL_PROTO: http
       VIRTUAL_PORT: ${EMBY_PORT}
       LETSENCRYPT_HOST: ${EMBY_URL}
       LETSENCRYPT_EMAIL: ${LETSENCRYPT_EMAIL_ID}
