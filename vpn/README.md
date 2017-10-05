@@ -1,59 +1,23 @@
-# Quick Start with docker-compose
-This has been copied as is from the original [source repository](https://github.com/kylemanna/docker-openvpn)
-* Initialize the configuration files and certificates
+Instructions
+===
 
-```bash
-docker-compose run --rm openvpn ovpn_genconfig -u udp://VPN.SERVERNAME.COM
-docker-compose run --rm openvpn ovpn_initpki
+You can either follow the original instructions in the [README_original](README_original.md) file or use my helpers as shown below
+
+1. Create the server with ./create_server.sh script by passing the url as the first parameter.  
+```sh
+./create_server vpn.mydomain.com
 ```
+2. Follow the instructions on screen and enter the required passwords.
 
-* Fix ownership (depending on how to handle your backups, this may not be needed)
+3. You can check the logs with `docker-compose logs -f`
 
-```bash
-sudo chown -R $(whoami): ./openvpn-data
+4. Create your clients with the ./create_client.sh script and enter the main key password from step 1 and the desired client key password.
+```sh
+./create_client.sh -p -d cert_dir -n myclient
 ```
+5. Repeat for all required clients, you can run `./create_client.sh` -h to see usage.  
 
-* Start OpenVPN server process
-
-```bash
-docker-compose up -d openvpn
-```
-
-* You can access the container logs with
-
-```bash
-docker-compose logs -f
-```
-
-* Generate a client certificate
-
-```bash
-export CLIENTNAME="your_client_name"
-# with a passphrase (recommended)
-docker-compose run --rm openvpn easyrsa build-client-full $CLIENTNAME
-# without a passphrase (not recommended)
-docker-compose run --rm openvpn easyrsa build-client-full $CLIENTNAME nopass
-```
-
-* Retrieve the client configuration with embedded certificates
-
-```bash
-docker-compose run --rm openvpn ovpn_getclient $CLIENTNAME > $CLIENTNAME.ovpn
-```
-
-* Revoke a client certificate
-
-```bash
-# Keep the corresponding crt, key and req files.
-docker-compose run --rm openvpn ovpn_revokeclient $CLIENTNAME
-# Remove the corresponding crt, key and req files.
-docker-compose run --rm openvpn ovpn_revokeclient $CLIENTNAME remove
-```
-
-## Debugging Tips
-
-* Create an environment variable with the name DEBUG and value of 1 to enable debug output (using "docker -e").
-
-```bash
-docker-compose run -e DEBUG=1 openvpn
+6. To remove a client run
+```sh
+./create_client.sh -r -n myclient
 ```
