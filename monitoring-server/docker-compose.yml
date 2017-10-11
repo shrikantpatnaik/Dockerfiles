@@ -26,7 +26,7 @@ services:
       - '-alertmanager.url=http://alertmanager:9093'
       - '-storage.local.target-heap-size=1073741824'
       - '-storage.local.retention=200h'
-      - '-web.external-url=${PROMETHEUS_URL}'
+      - '-web.external-url=https://${PROMETHEUS_URL}'
     environment:
       VIRTUAL_HOST: ${PROMETHEUS_URL}
       VIRTUAL_PROTO: http
@@ -45,7 +45,7 @@ services:
     command:
       - '-config.file=/etc/alertmanager/alertmanager.conf'
       - '-storage.path=/alertmanager'
-      - '-web.external-url=${ALERTMANAGER_URL}'
+      - '-web.external-url=https://${ALERTMANAGER_URL}'
     environment:
       VIRTUAL_HOST: ${ALERTMANAGER_URL}
       VIRTUAL_PROTO: http
