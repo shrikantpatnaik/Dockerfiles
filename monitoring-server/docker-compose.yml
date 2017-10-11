@@ -43,7 +43,7 @@ services:
     volumes:
       - ${ALERTMANAGER_CONFIG_FILES_PATH}:/etc/alertmanager/
     command:
-      - '-config.file=/etc/alertmanager/config.yml'
+      - '-config.file=/etc/alertmanager/alertmanager.conf'
       - '-storage.path=/alertmanager'
       - '-web.external-url=${ALERTMANAGER_URL}'
     environment:
@@ -68,7 +68,7 @@ services:
     volumes:
       - ${BLACKBOX_EXPORTER_CONFIG_FILES_PATH}:/config
     command:
-      - '-config.file=/config/blackbox.yml'
+      - '--config.file=/config/blackbox.yml'
 
   grafana:
     image: grafana/grafana
