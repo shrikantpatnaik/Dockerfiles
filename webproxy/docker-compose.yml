@@ -20,6 +20,7 @@ services:
       - ${NGINX_FILES_PATH}/vhost.d:/etc/nginx/vhost.d
       - ${NGINX_FILES_PATH}/html:/usr/share/nginx/html
       - ${NGINX_FILES_PATH}/certs:/etc/nginx/certs:ro
+      - ${NGINX_FILES_PATH}/htpasswd:/etc/nginx/htpasswd
 
   nginx-gen:
     image: jwilder/docker-gen
