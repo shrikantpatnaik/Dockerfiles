@@ -1,5 +1,9 @@
-Setup
----
+# Blog / Ghost
+
+This will install [Ghost](https://ghost.org). The container uses SQLite so an additional DB container is not required.
+
+## Setup
+
 You must change the url parameter in the ghost config file. you can do so by running the following command:
 
 ```sh
