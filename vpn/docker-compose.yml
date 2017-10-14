@@ -1,12 +1,31 @@
 version: '3'
+networks:
+  default:
+    external:
+      name: webproxy_webproxy-net
+
 services:
   openvpn:
     cap_add:
-     - NET_ADMIN
+      - NET_ADMIN
     image: kylemanna/openvpn
     container_name: openvpn
     ports:
-     - "1194:1194/udp"
+      - "1194:1194/udp"
     restart: always
     volumes:
-     - ${OPENVPN_DATA}:/etc/openvpn
+      - ${OPENVPN_DATA}:/etc/openvpn
+      - ${OPENVPN_DATA}/status:/tmp
+
+  openvpn_exporter:
+    image: shrikantpatnaik/openvpn_exporter
+    container_name: openvpn_exporter
+    ports:
+      - "127.0.0.1:${OPENVPN_EXPORTER_PORT}:9176"
+    restart: always
+    volumes:
+      - ${OPENVPN_DATA}/status/openvpn-status.log:/etc/openvpn_exporter/server.status
+    environment:
+      VIRTUAL_HOST: ${OPENVPN_EXPORTER_URL}
+      VIRTUAL_PROTO: http
+      VIRTUAL_PORT: ${OPENVPN_EXPORTER_PORT}
