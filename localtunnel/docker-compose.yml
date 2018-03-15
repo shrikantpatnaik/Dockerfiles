@@ -1,0 +1,21 @@
+# This requires building the image from https://github.com/andreipoe/linkr-docker with custom configuration
+version: '3'
+networks:
+  default:
+    external:
+      name: webproxy_webproxy-net
+
+services:
+  localtunnel:
+    image: defunctzombie/localtunnel-server
+    container_name: localtunnel
+    ports:
+     - "127.0.0.1:${LT_PORT}:${LT_PORT}"
+    restart: always
+    command: --port ${LT_PORT}
+    environment:
+      VIRTUAL_HOST: ${LT_URL}
+      VIRTUAL_PROTO: http
+      VIRTUAL_PORT: ${LT_PORT}
+      LETSENCRYPT_HOST: ${LT_URL}
+      LETSENCRYPT_EMAIL: ${LETSENCRYPT_EMAIL_ID}
