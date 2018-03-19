@@ -28,7 +28,7 @@ services:
       LETSENCRYPT_EMAIL: ${LETSENCRYPT_EMAIL_ID}
 
   emby:
-    image: emby/embyserver
+    image: emby/embyserver:latest
     container_name: embyserver
     restart: always
     ports:
@@ -37,7 +37,6 @@ services:
       - ${EMBY_FILES_PATH}/config:/config
       - ${EMBY_MEDIA_PATH}:/media
     environment:
-      TZ: "${TIMEZONE}"
       UID: ${USER_ID}
       GUID: ${GROUP_ID}
       GIDLIST: ${GROUP_ID}
