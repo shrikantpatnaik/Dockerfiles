@@ -38,6 +38,9 @@ services:
       - ${EMBY_MEDIA_PATH}:/media
     environment:
       TZ: "${TIMEZONE}"
+      UID: ${USER_ID}
+      GUID: ${GROUP_ID}
+      GIDLIST: ${GROUP_ID}
       VIRTUAL_HOST: ${EMBY_URL}
       VIRTUAL_PROTO: http
       VIRTUAL_PORT: ${EMBY_PORT}
