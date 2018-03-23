@@ -27,4 +27,6 @@ services:
   mongo:
     container_name: mongo
     image: mongo:latest
+    volumes:
+      - "${MONGO_FILES_PATH}:/data/db"
     command: mongod --storageEngine=wiredTiger
