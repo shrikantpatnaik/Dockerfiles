@@ -16,7 +16,7 @@ services:
       - ${METEOR_SETTINGS_FOLDER}:/root/app/settings
     restart: always
     environment:
-      ROOT_URL: ${PHOTO_SITE_URL}
+      ROOT_URL: ${METEOR_ROOT_URL}
       MONGO_URL: mongodb://mongo:27017/meteor
       VIRTUAL_HOST: ${PHOTO_SITE_URL}
       VIRTUAL_PROTO: http
