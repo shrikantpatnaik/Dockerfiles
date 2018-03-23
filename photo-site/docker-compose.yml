@@ -1,0 +1,31 @@
+version: '3'
+networks:
+  default:
+    external:
+      name: webproxy_webproxy-net
+
+services:
+  app:
+    image: shrikantpatnaik/s3gallery
+    container_name: photos-site
+    ports:
+      - "${PHOTO_SITE_PORT}:3000"
+    links:
+      - mongo
+    environment:
+      - ROOT_URL=${PHOTO_SITE_URL}
+      - MONGO_URL=mongodb://mongo:27017/meteor
+    volumes:
+      - ${METEOR_SETTINGS_FOLDER}:/root/app/settings
+    restart: always
+    environment:
+      VIRTUAL_HOST: ${PHOTO_SITE_URL}
+      VIRTUAL_PROTO: http
+      VIRTUAL_PORT: ${PHOTO_SITE_PORT}
+      LETSENCRYPT_HOST: ${PHOTO_SITE_URL}
+      LETSENCRYPT_EMAIL: ${LETSENCRYPT_EMAIL_ID}
+
+  mongo:
+    container_name: mongo
+    image: mongo:latest
+    command: mongod --storageEngine=wiredTiger
