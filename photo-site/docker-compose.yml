@@ -21,8 +21,6 @@ services:
       VIRTUAL_HOST: ${PHOTO_SITE_URL}
       VIRTUAL_PROTO: http
       VIRTUAL_PORT: ${PHOTO_SITE_PORT}
-      LETSENCRYPT_HOST: ${PHOTO_SITE_URL}
-      LETSENCRYPT_EMAIL: ${LETSENCRYPT_EMAIL_ID}
 
   mongo:
     container_name: mongo
