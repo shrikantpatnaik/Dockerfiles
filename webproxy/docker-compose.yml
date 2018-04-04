@@ -37,6 +37,9 @@ services:
       - ${NGINX_FILES_PATH}/htpasswd:/etc/nginx/htpasswd
       - /var/run/docker.sock:/tmp/docker.sock:ro
       - ./nginx.tmpl:/etc/docker-gen/templates/nginx.tmpl:ro
+    environment:
+      ENABLE_IPV6: "true"
+
 
   nginx-letsencrypt:
     image: jrcs/letsencrypt-nginx-proxy-companion
