@@ -61,6 +61,8 @@ services:
     image: prom/blackbox-exporter
     container_name: blackbox_exporter
     restart: always
+    ports:
+      - "127.0.0.1:9115:9115"
     volumes:
       - ${BLACKBOX_EXPORTER_CONFIG_FILES_PATH}:/config
     command:
