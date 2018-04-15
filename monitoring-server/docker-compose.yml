@@ -19,14 +19,14 @@ services:
       - ${PROMETHEUS_CONFIG_FILES_PATH}:/etc/prometheus/
       - prometheus_data:/prometheus
     command:
-      - '-config.file=/etc/prometheus/prometheus.yml'
-      - '-storage.local.path=/prometheus'
-      - '-web.console.libraries=/etc/prometheus/console_libraries'
-      - '-web.console.templates=/etc/prometheus/consoles'
-      - '-alertmanager.url=http://alertmanager:9093'
-      - '-storage.local.target-heap-size=1073741824'
-      - '-storage.local.retention=200h'
-      - '-web.external-url=https://${PROMETHEUS_URL}'
+      - '--config.file=/etc/prometheus/prometheus.yml'
+      - '--storage.local.path=/prometheus'
+      - '--web.console.libraries=/etc/prometheus/console_libraries'
+      - '--web.console.templates=/etc/prometheus/consoles'
+      - '--alertmanager.url=http://alertmanager:9093'
+      - '--storage.local.target-heap-size=1073741824'
+      - '--storage.local.retention=200h'
+      - '--web.external-url=https://${PROMETHEUS_URL}'
     environment:
       VIRTUAL_HOST: ${PROMETHEUS_URL}
       VIRTUAL_PROTO: http
@@ -43,9 +43,9 @@ services:
     volumes:
       - ${ALERTMANAGER_CONFIG_FILES_PATH}:/etc/alertmanager/
     command:
-      - '-config.file=/etc/alertmanager/alertmanager.conf'
-      - '-storage.path=/alertmanager'
-      - '-web.external-url=https://${ALERTMANAGER_URL}'
+      - '--config.file=/etc/alertmanager/alertmanager.conf'
+      - '--storage.path=/alertmanager'
+      - '--web.external-url=https://${ALERTMANAGER_URL}'
     environment:
       VIRTUAL_HOST: ${ALERTMANAGER_URL}
       VIRTUAL_PROTO: http
