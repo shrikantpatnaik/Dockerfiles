@@ -1,0 +1,13 @@
+version: '3'
+
+services:
+  cloudflare_ddns:
+    image: shrikantpatnaik/cloudflare_ddns
+    container_name: cloudflare_ddns
+    restart: always
+    network_mode: "host"
+    environment:
+      CLOUDFLARE_EMAIL: ${DDNS_CLOUDFLARE_EMAIL}
+      CLOUDFLARE_API_KEY: ${DDNS_CLOUDFLARE_API_KEY}
+      DNS_ZONE: ${DDNS_DNS_ZONE}
+      SUBDOMAIN: ${DDNS_SUBDOMAIN}
