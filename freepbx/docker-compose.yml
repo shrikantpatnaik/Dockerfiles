@@ -1,0 +1,49 @@
+version: '3'
+networks:
+  default:
+    external:
+      name: webproxy_webproxy-net
+
+services:
+  freepbx-app:
+    image: tiredofit/freepbx
+    container_name: freepbx-app
+    restart: always
+    cap_add:
+      - NET_ADMIN
+    privileged: true
+    ports:
+      - 5060:5060
+      - 5160:5160
+      - 18000-18100:18000-18100/udp
+    volumes:
+      - ${FREEPBX_FILES_PATH}/certs:/certs
+      - ${FREEPBX_FILES_PATH}/data:/data
+      - ${FREEPBX_FILES_PATH}/logs:/var/log
+      - ${FREEPBX_FILES_PATH}/data/www:/var/www/html
+    environment:
+      VIRTUAL_HOST: ${FREEPBX_URL}
+      VIRTUAL_PROTO: http
+      VIRTUAL_PORT: 80
+      LETSENCRYPT_HOST: ${FREEPBX_URL}
+      LETSENCRYPT_EMAIL: ${LETSENCRYPT_EMAIL_ID}
+      RTP_START: 18000
+      RTP_FINISH: 18100
+      DB_EMBEDDED: FALSE
+      DB_HOST: freebx-db
+      DB_PORT: 3306
+      DB_NAME: ${ASTERISK_DB_NAME}
+      DB_USER: ${ASTERISK_DB_USER}
+      DB_PASS: ${ASTERISK_DB_PASS}
+
+  freepbx-db:
+    container_name: freepbx-db
+    image: tiredofit/mariadb
+    restart: always
+    volumes:
+      - ${FREEPBX_FILES_PATH}/db:/var/lib/mysql
+    environment:
+      MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD}
+      MYSQL_DATABASE: ${ASTERISK_DB_NAME}
+      MYSQL_USER: ${ASTERISK_DB_USER}
+      MYSQL_PASSWORD: ${ASTERISK_DB_PASS}
