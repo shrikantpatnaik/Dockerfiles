@@ -1,0 +1,20 @@
+version: '3'
+networks:
+  default:
+    external:
+      name: webproxy_webproxy-net
+services:
+  e15website:
+    image: httpd:2.4
+    container_name: e15website
+    ports:
+     - "127.0.0.1:8080:80"
+    restart: always
+    volumes:
+     - ${E15_FILES_PATH}:/usr/local/apache2/htdocs/
+    environment:
+      VIRTUAL_HOST: ${E15_URL}
+      VIRTUAL_PROTO: http
+      VIRTUAL_PORT: 8080
+      LETSENCRYPT_HOST: ${E15_URL}
+      LETSENCRYPT_EMAIL: ${LETSENCRYPT_EMAIL_ID}
