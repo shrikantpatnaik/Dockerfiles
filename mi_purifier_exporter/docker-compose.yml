@@ -1,0 +1,20 @@
+version: '3'
+networks:
+  default:
+    external:
+      name: webproxy_webproxy-net
+
+
+services:
+  cadvisor:
+    image: shrikantpatnaik/mi_purifier_exporter
+    container_name: mi_purifier_exporter
+    restart: always
+    ports:
+    - "127.0.0.1:${MI_PURIFIER_EXPORTER_PORT}:8000"
+    volumes:
+    - ${MI_PURIFIER_EXPORTER_FILES_PATH}:/config
+    environment:
+      VIRTUAL_HOST: ${MI_PURIFIER_EXPORTER_URL}
+      VIRTUAL_PROTO: http
+      VIRTUAL_PORT: ${MI_PURIFIER_EXPORTER_PORT}
