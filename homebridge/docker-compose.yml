@@ -1,0 +1,13 @@
+version: '3'
+
+services:
+  homebridge:
+    image: oznu/homebridge
+    container_name: homebridge
+    restart: always
+    volumes:
+      - ${HOMEBRIDGE_FILES_PATH}:/homebridge
+    environment:
+      TZ: "${TIMEZONE}"
+      PUID: ${USER_ID}
+      PGID: ${GROUP_ID}
