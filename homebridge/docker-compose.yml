@@ -4,6 +4,7 @@ services:
   homebridge:
     image: oznu/homebridge
     container_name: homebridge
+    network_mode: "host"
     restart: always
     volumes:
       - ${HOMEBRIDGE_FILES_PATH}:/homebridge
